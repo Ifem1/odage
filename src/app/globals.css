@@ -1,0 +1,84 @@
+@import "tailwindcss";
+
+:root {
+  --color-archive-bone: #f4efe4;
+  --color-old-parchment: #ded2ba;
+  --color-ink-charcoal: #1e1b18;
+  --color-faded-umber: #8b6f47;
+  --color-dust-grey: #a7a097;
+  --color-oxide-red: #a74632;
+  --color-verdigris: #3e7c78;
+  --color-consensus-blue: #375cff;
+  --color-shadow-brown: #30251b;
+  --color-soft-linen: #faf7ef;
+
+  --background: var(--color-soft-linen);
+  --foreground: var(--color-ink-charcoal);
+}
+
+@theme inline {
+  --color-archive-bone: var(--color-archive-bone);
+  --color-old-parchment: var(--color-old-parchment);
+  --color-ink-charcoal: var(--color-ink-charcoal);
+  --color-faded-umber: var(--color-faded-umber);
+  --color-dust-grey: var(--color-dust-grey);
+  --color-oxide-red: var(--color-oxide-red);
+  --color-verdigris: var(--color-verdigris);
+  --color-consensus-blue: var(--color-consensus-blue);
+  --color-shadow-brown: var(--color-shadow-brown);
+  --color-soft-linen: var(--color-soft-linen);
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --font-display: var(--font-fraunces);
+  --font-body: var(--font-source-sans);
+  --font-mono: var(--font-plex-mono);
+}
+
+body {
+  background-color: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-body), sans-serif;
+  background-image:
+    radial-gradient(circle at 20% 10%, rgba(139, 111, 71, 0.05), transparent 40%),
+    radial-gradient(circle at 80% 60%, rgba(62, 124, 120, 0.04), transparent 45%);
+  background-attachment: fixed;
+}
+
+.font-display {
+  font-family: var(--font-display), serif;
+}
+
+.font-mono-detail {
+  font-family: var(--font-mono), monospace;
+}
+
+.torn-divider {
+  height: 10px;
+  width: 100%;
+  background-repeat: repeat-x;
+  background-size: 24px 10px;
+  background-image: linear-gradient(135deg, var(--color-old-parchment) 25%, transparent 25%),
+    linear-gradient(225deg, var(--color-old-parchment) 25%, transparent 25%);
+  opacity: 0.6;
+}
+
+.tension-lines {
+  background-image: repeating-linear-gradient(
+    45deg,
+    rgba(167, 70, 50, 0.08),
+    rgba(167, 70, 50, 0.08) 2px,
+    transparent 2px,
+    transparent 10px
+  );
+}
+
+.archival-texture {
+  background-image:
+    repeating-linear-gradient(0deg, rgba(30, 27, 24, 0.015) 0px, transparent 1px, transparent 2px),
+    repeating-linear-gradient(90deg, rgba(30, 27, 24, 0.01) 0px, transparent 1px, transparent 2px);
+}
+
+::selection {
+  background: var(--color-consensus-blue);
+  color: var(--color-soft-linen);
+}

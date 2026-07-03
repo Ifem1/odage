@@ -1,0 +1,316 @@
+import { InterpretiveLayer, MemoryRecord } from "./types";
+
+export const mockRecords: MemoryRecord[] = [
+  {
+    record_id: "rec_riverfront_statue",
+    creator: "0x4a1f...9c2e",
+    title: "The Removed Riverfront Statue",
+    base_event_summary:
+      "A bronze statue of a colonial administrator stood in the riverfront square for 92 years before being removed after public demonstrations.",
+    event_timeframe: "1931–2025",
+    place_or_context: "Riverfront civic square, post-colonial city memory dispute",
+    source_urls: ["https://example.org/riverfront-statue-history"],
+    sensitivity_level: "medium",
+    visibility_mode: "public",
+    created_at_label: "2025-03-14",
+    status: "active",
+    base_layer_id: "layer_riverfront_base",
+    categories: ["History", "Contested", "Community Conflict"],
+  },
+  {
+    record_id: "rec_dao_treasury_dispute",
+    creator: "0x77bd...11aa",
+    title: "The Treasury Vote That Split the DAO",
+    base_event_summary:
+      "A contested treasury proposal led to a governance dispute, a contentious re-vote, and a wave of contributor departures.",
+    event_timeframe: "2024",
+    place_or_context: "Onchain governance forum, DAO memory",
+    source_urls: ["https://example.org/dao-treasury-postmortem"],
+    sensitivity_level: "medium",
+    visibility_mode: "public",
+    created_at_label: "2025-01-02",
+    status: "active",
+    base_layer_id: "layer_dao_base",
+    categories: ["DAO Memory", "Contested"],
+  },
+  {
+    record_id: "rec_memorial_flood",
+    creator: "0x9e02...5d3c",
+    title: "Names of the Lowland Flood",
+    base_event_summary:
+      "A community archive recording the names, testimonies, and unresolved questions following a catastrophic flood.",
+    event_timeframe: "2019",
+    place_or_context: "Lowland district memorial archive",
+    source_urls: ["https://example.org/lowland-flood-report"],
+    sensitivity_level: "high",
+    visibility_mode: "community_only",
+    created_at_label: "2024-09-08",
+    status: "active",
+    base_layer_id: "layer_flood_base",
+    categories: ["Memorial", "Sensitive"],
+  },
+  {
+    record_id: "rec_mural_reframing",
+    creator: "0x1c4e...8877",
+    title: "The Union Street Mural",
+    base_event_summary:
+      "A 1978 mural celebrating industrial labor has been read very differently across generations of the neighborhood it overlooks.",
+    event_timeframe: "1978–present",
+    place_or_context: "Union Street, working-class arts district",
+    source_urls: ["https://example.org/union-street-mural"],
+    sensitivity_level: "low",
+    visibility_mode: "public",
+    created_at_label: "2024-11-20",
+    status: "active",
+    base_layer_id: "layer_mural_base",
+    categories: ["Art", "Education"],
+  },
+];
+
+export const mockLayers: InterpretiveLayer[] = [
+  {
+    layer_id: "layer_riverfront_base",
+    record_id: "rec_riverfront_statue",
+    author: "0x4a1f...9c2e",
+    layer_title: "Original Inscription",
+    layer_text:
+      "A bronze statue of a colonial administrator stood in the riverfront square for 92 years before being removed after public demonstrations.",
+    perspective_label: "Official record",
+    intended_effect: "Add context",
+    supporting_sources: ["https://example.org/riverfront-statue-history"],
+    relation_claimed_by_author: "base",
+    consensus: null,
+    created_at_label: "2025-03-14",
+    status: "placed",
+    is_base_layer: true,
+  },
+  {
+    layer_id: "layer_riverfront_civic",
+    record_id: "rec_riverfront_statue",
+    author: "0x22aa...44bb",
+    layer_title: "Civic Landmark Memory",
+    layer_text:
+      "For many residents, the statue functioned as a familiar civic landmark and a point of orientation in the city's architectural history.",
+    perspective_label: "Official record",
+    intended_effect: "Add context",
+    supporting_sources: ["https://example.org/civic-heritage-registry"],
+    relation_claimed_by_author: "agrees",
+    consensus: {
+      relationship_category: "contextual_expansion",
+      visibility_treatment: "foreground",
+      support_level: "moderate",
+      sensitivity: "low",
+      keeps_prior_layers_visible: true,
+      requires_warning: false,
+      short_reason: "Adds architectural and civic context without contesting the base record.",
+    },
+    created_at_label: "2025-03-20",
+    status: "placed",
+  },
+  {
+    layer_id: "layer_riverfront_descendant",
+    record_id: "rec_riverfront_statue",
+    author: "0x9911...ffcc",
+    layer_title: "Memory of Domination",
+    layer_text:
+      "For families whose ancestors experienced forced labour under colonial rule, the statue did not represent civic pride. It represented public humiliation made permanent in bronze.",
+    perspective_label: "Descendant perspective",
+    intended_effect: "Contest old framing",
+    supporting_sources: [
+      "https://example.org/oral-history-archive",
+      "https://example.org/labour-records-1930s",
+    ],
+    relation_claimed_by_author: "contests",
+    consensus: {
+      relationship_category: "counter_memory",
+      visibility_treatment: "side_by_side",
+      support_level: "strong",
+      sensitivity: "medium",
+      keeps_prior_layers_visible: true,
+      requires_warning: false,
+      short_reason:
+        "Adds a grounded counter-memory that should remain visible beside the civic landmark interpretation.",
+    },
+    created_at_label: "2025-04-02",
+    status: "placed",
+  },
+  {
+    layer_id: "layer_riverfront_removal",
+    record_id: "rec_riverfront_statue",
+    author: "0x4a1f...9c2e",
+    layer_title: "The Removal Decision",
+    layer_text:
+      "City council voted to remove the statue following sustained demonstrations, framing the act as reconciliation rather than erasure.",
+    perspective_label: "Reconciliation attempt",
+    intended_effect: "Teach complexity",
+    supporting_sources: ["https://example.org/council-minutes-2025"],
+    relation_claimed_by_author: "reframes",
+    consensus: {
+      relationship_category: "contested_claim",
+      visibility_treatment: "contested_overlay",
+      support_level: "moderate",
+      sensitivity: "medium",
+      keeps_prior_layers_visible: true,
+      requires_warning: false,
+      short_reason: "Framing as reconciliation is disputed by both prior perspectives.",
+    },
+    created_at_label: "2025-05-11",
+    status: "placed",
+  },
+  {
+    layer_id: "layer_dao_base",
+    record_id: "rec_dao_treasury_dispute",
+    author: "0x77bd...11aa",
+    layer_title: "Original Inscription",
+    layer_text:
+      "A contested treasury proposal led to a governance dispute, a contentious re-vote, and a wave of contributor departures.",
+    perspective_label: "Official record",
+    intended_effect: "Add context",
+    supporting_sources: ["https://example.org/dao-treasury-postmortem"],
+    relation_claimed_by_author: "base",
+    consensus: null,
+    created_at_label: "2025-01-02",
+    status: "placed",
+    is_base_layer: true,
+  },
+  {
+    layer_id: "layer_dao_founders",
+    record_id: "rec_dao_treasury_dispute",
+    author: "0x77bd...11aa",
+    layer_title: "A Coordination Failure",
+    layer_text:
+      "Founders framed the event as a breakdown in proposal review timing rather than any bad-faith action.",
+    perspective_label: "Official record",
+    intended_effect: "Add context",
+    supporting_sources: [],
+    relation_claimed_by_author: "agrees",
+    consensus: {
+      relationship_category: "contextual_expansion",
+      visibility_treatment: "foreground",
+      support_level: "moderate",
+      sensitivity: "low",
+      keeps_prior_layers_visible: true,
+      requires_warning: false,
+      short_reason: "Provides founder framing consistent with the base record.",
+    },
+    created_at_label: "2025-01-10",
+    status: "placed",
+  },
+  {
+    layer_id: "layer_dao_contributors",
+    record_id: "rec_dao_treasury_dispute",
+    author: "0x3bcd...9021",
+    layer_title: "A Trust Breach",
+    layer_text:
+      "Contributors experienced the vote as exclusionary — decisions made without the visibility promised at DAO formation.",
+    perspective_label: "Counter-memory",
+    intended_effect: "Contest old framing",
+    supporting_sources: ["https://example.org/contributor-statement"],
+    relation_claimed_by_author: "contests",
+    consensus: {
+      relationship_category: "repair_layer",
+      visibility_treatment: "contested_overlay",
+      support_level: "moderate",
+      sensitivity: "medium",
+      keeps_prior_layers_visible: true,
+      requires_warning: false,
+      short_reason:
+        "Reframes the dispute as a trust repair issue while preserving the original coordination framing.",
+    },
+    created_at_label: "2025-01-15",
+    status: "placed",
+  },
+  {
+    layer_id: "layer_flood_base",
+    record_id: "rec_memorial_flood",
+    author: "0x9e02...5d3c",
+    layer_title: "Original Inscription",
+    layer_text:
+      "Official account: the Lowland flood displaced 1,200 residents and claimed 34 confirmed lives across two districts.",
+    perspective_label: "Official record",
+    intended_effect: "Add context",
+    supporting_sources: ["https://example.org/lowland-flood-report"],
+    relation_claimed_by_author: "base",
+    consensus: null,
+    created_at_label: "2024-09-08",
+    status: "placed",
+    is_base_layer: true,
+  },
+  {
+    layer_id: "layer_flood_testimony",
+    record_id: "rec_memorial_flood",
+    author: "0x55ee...2201",
+    layer_title: "What the Report Doesn't Say",
+    layer_text:
+      "Family testimonies describe unanswered questions about warning delays, and a grief that the official count does not hold.",
+    perspective_label: "Survivor memory",
+    intended_effect: "Preserve grief",
+    supporting_sources: ["https://example.org/family-testimony-archive"],
+    relation_claimed_by_author: "mourns",
+    consensus: {
+      relationship_category: "mourning_layer",
+      visibility_treatment: "sensitive_reveal",
+      support_level: "symbolic",
+      sensitivity: "high",
+      keeps_prior_layers_visible: true,
+      requires_warning: true,
+      short_reason:
+        "Adds a grief-centered memory layer that should be preserved with sensitivity controls.",
+    },
+    created_at_label: "2024-09-22",
+    status: "placed",
+  },
+  {
+    layer_id: "layer_mural_base",
+    record_id: "rec_mural_reframing",
+    author: "0x1c4e...8877",
+    layer_title: "Original Inscription",
+    layer_text:
+      "A 1978 mural celebrating industrial labor has been read very differently across generations of the neighborhood it overlooks.",
+    perspective_label: "Official record",
+    intended_effect: "Add context",
+    supporting_sources: ["https://example.org/union-street-mural"],
+    relation_claimed_by_author: "base",
+    consensus: null,
+    created_at_label: "2024-11-20",
+    status: "placed",
+    is_base_layer: true,
+  },
+  {
+    layer_id: "layer_mural_artistic",
+    record_id: "rec_mural_reframing",
+    author: "0x66ab...3390",
+    layer_title: "A Symbol Outliving Its Factory",
+    layer_text:
+      "The mural now stands over condominiums where the factory once was — the labor it celebrates has largely left the neighborhood.",
+    perspective_label: "Artistic reading",
+    intended_effect: "Teach complexity",
+    supporting_sources: [],
+    relation_claimed_by_author: "reframes",
+    consensus: {
+      relationship_category: "artistic_reframing",
+      visibility_treatment: "underlayer_visible",
+      support_level: "symbolic",
+      sensitivity: "low",
+      keeps_prior_layers_visible: true,
+      requires_warning: false,
+      short_reason: "Adds a symbolic reading of the mural's changed context without contesting its history.",
+    },
+    created_at_label: "2024-12-01",
+    status: "placed",
+  },
+];
+
+export function getRecordLayers(recordId: string): InterpretiveLayer[] {
+  return mockLayers
+    .filter((l) => l.record_id === recordId)
+    .sort((a, b) => a.created_at_label.localeCompare(b.created_at_label));
+}
+
+export function getRecord(recordId: string): MemoryRecord | undefined {
+  return mockRecords.find((r) => r.record_id === recordId);
+}
+
+export function getLayer(layerId: string): InterpretiveLayer | undefined {
+  return mockLayers.find((l) => l.layer_id === layerId);
+}
