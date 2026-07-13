@@ -3,6 +3,12 @@ import { studionet } from "genlayer-js/chains";
 import type { Address } from "genlayer-js/types";
 import { InterpretiveLayer, MemoryRecord } from "../types";
 import {
+  decodeSubmitLayerResult,
+  extractWriteResult,
+  parseJsonField,
+  type SubmitLayerResult,
+} from "./result-decoder";
+import {
   getLayer,
   getRecord,
   getRecordLayers,
@@ -57,21 +63,6 @@ function delay<T>(value: T, ms = 400): Promise<T> {
   return new Promise((resolve) => setTimeout(() => resolve(value), ms));
 }
 
-function parseJsonField<T>(raw: unknown, fallback: T): T {
-  if (typeof raw !== "string" || raw === "") return fallback;
-  try {
-    return JSON.parse(raw) as T;
-  } catch {
-    return fallback;
-  }
-}
-
-// Write methods return their decoded value inside the transaction receipt's `data`
-// field once GenVM finalizes consensus. The exact accessor should be confirmed
-// against a live StudioNet deployment of OdageContract before shipping to production.
-function extractWriteResult(receipt: { data?: Record<string, unknown> }): unknown {
-  return receipt.data?.leader_receipt ?? receipt.data?.result ?? receipt.data ?? "";
-}
 
 // The contract stores source URLs as a JSON-encoded string (`source_urls_json`) since
 // GenVM state is flat JSON; the frontend works with a plain `source_urls` string array.
@@ -211,10 +202,7 @@ export interface SubmitLayerInput {
   relation_claimed_by_author: string;
 }
 
-export interface SubmitLayerResult {
-  layer_id: string;
-  consensus: InterpretiveLayer["consensus"];
-}
+export type { SubmitLayerResult } from "./result-decoder";
 
 // Calls the OdageContract `submit_layer` method, which triggers GenLayer's
 // non-deterministic consensus review (gl.eq_principle.prompt_non_comparative)
@@ -256,11 +244,7 @@ export async function writeSubmitLayer(
     value: 0n,
   });
   const receipt = await client.waitForTransactionReceipt({ hash: txHash });
-  const placedLayer = parseJsonField<InterpretiveLayer | undefined>(extractWriteResult(receipt), undefined);
-  return {
-    layer_id: placedLayer?.layer_id ?? "",
-    consensus: placedLayer?.consensus ?? null,
-  };
+  return decodeSubmitLayerResult(receipt);
 }
 
 export async function writeFlagLayer(

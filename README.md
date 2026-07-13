@@ -60,11 +60,24 @@ By default the app runs against local mock data (`src/lib/mock-data.ts`) so ever
 
 ```bash
 # .env.local
-NEXT_PUBLIC_ODAGE_CONTRACT_ADDRESS=0xYourDeployedContractAddress
+NEXT_PUBLIC_ODAGE_CONTRACT_ADDRESS=0xaF43180cA08981ccc18B20eA88eE340Fd87D663a
 NEXT_PUBLIC_GENLAYER_CHAIN_ID=genlayer-studionet
 ```
 
 Once set, all reads and writes go through `genlayer-js` against StudioNet, and writes are signed by whatever GenLayer-compatible wallet is injected in the browser.
+
+### Tests
+
+Run the receipt-decoding tests with `npm test`. The live `submit_layer` integration test is skipped unless these variables point to a deployed contract and an existing active record:
+
+```bash
+GENLAYER_CONTRACT_ADDRESS=0x... \
+GENLAYER_PRIVATE_KEY=0x... \
+GENLAYER_TEST_RECORD_ID=REC-... \
+npm run test:live
+```
+
+Use a funded disposable StudioNet account: the live test submits a real layer and therefore changes contract state.
 
 ## Deploying the contract
 

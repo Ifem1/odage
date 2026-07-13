@@ -5,6 +5,8 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build",
+    "test": "node --test --experimental-strip-types tests/*.test.ts",
+    "test:live": "node --env-file-if-exists=.env.local --test --experimental-strip-types tests/submit-layer.live.test.ts",
     "start": "next start",
     "lint": "eslint"
   },
