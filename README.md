@@ -60,7 +60,7 @@ By default the app runs against local mock data (`src/lib/mock-data.ts`) so ever
 
 ```bash
 # .env.local
-NEXT_PUBLIC_ODAGE_CONTRACT_ADDRESS=0xaF43180cA08981ccc18B20eA88eE340Fd87D663a
+NEXT_PUBLIC_ODAGE_CONTRACT_ADDRESS=0x88122BB5e9712A630A8c1294687F9400CC11780D
 NEXT_PUBLIC_GENLAYER_CHAIN_ID=genlayer-studionet
 ```
 

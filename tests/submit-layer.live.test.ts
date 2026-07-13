@@ -33,6 +33,8 @@ test("live submit_layer returns the layer result consumed by the app", { skip: !
   const receipt = await client.waitForTransactionReceipt({
     hash,
     status: TransactionStatus.FINALIZED,
+    interval: 5_000,
+    retries: 120,
   });
   const result = decodeSubmitLayerResult(receipt);
 
