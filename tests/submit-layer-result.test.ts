@@ -21,6 +21,31 @@ test("decodes submit_layer from a GenLayer leader receipt", () => {
   assert.deepEqual(decodeSubmitLayerResult(receipt), layer);
 });
 
+test("decodes the live StudioNet leader_receipt array and readable payload", () => {
+  const layer = {
+    layer_id: "LAYER-2",
+    consensus: {
+      relationship_category: "educational_annotation",
+      visibility_treatment: "side_by_side",
+      support_level: "strong",
+      sensitivity: "low",
+      keeps_prior_layers_visible: true,
+      requires_warning: false,
+      short_reason: "Official sources support the contextual annotation.",
+    },
+  };
+  const receipt = {
+    data: { calldata: { readable: "submitted calldata" } },
+    consensus_data: {
+      leader_receipt: [
+        { result: { status: "return", payload: { readable: JSON.stringify(JSON.stringify(layer)) } } },
+      ],
+    },
+  };
+
+  assert.deepEqual(decodeSubmitLayerResult(receipt), layer);
+});
+
 test("rejects a finalized write with no decodable return value", () => {
   assert.throws(
     () => decodeSubmitLayerResult({ data: { consensus_data: {} } }),
